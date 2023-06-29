@@ -1,14 +1,10 @@
-import room2 from "../assets/room2.jpg";
-import room1 from "../assets/room1.jpg";
-import room3 from "../assets/room3.jpg";
-import room4 from "../assets/room4.jpg";
 import uuid from "react-uuid";
 
 export const roomsList = [
   {
     id: uuid(),
     title: "Queen Bed A-12324",
-    image: room1,
+    image: "",
     room_type: "Single Bed",
     room_number: 10,
     amenities: [
@@ -33,7 +29,7 @@ export const roomsList = [
   {
     id: uuid(),
     title: "Classic Double Bed B-12324",
-    image: room2,
+    image: "",
     room_type: "Double Bed",
      room_number: 3,
     amenities: [
@@ -58,7 +54,7 @@ export const roomsList = [
   {
     id: uuid(),
     title: "Luxury Room  D-1231",
-    image: room3,
+    image: "",
     room_type: "Double Superior",
      room_number: 2,
     amenities: [
@@ -83,7 +79,7 @@ export const roomsList = [
   {
     id: uuid(),
     title: "Luxury Suite Room  X-1342",
-    image: room4,
+    image: "",
     room_type: "Suite",
      room_number: 5,
     amenities: [
@@ -109,7 +105,7 @@ export const roomsList = [
    {
     id: uuid(),
     title: "Queen Bed A-12324",
-    image: room1,
+    image: "",
     room_type: "Single Bed",
     room_number: 10,
     amenities: [
