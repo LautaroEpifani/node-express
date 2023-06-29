@@ -13,6 +13,16 @@ export interface Booking {
   bgrColor: string;
 }
 
+export interface Message {
+  date: string;
+  hour: string;
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  comment: string;
+}
 
 export interface Room {
     id: string;

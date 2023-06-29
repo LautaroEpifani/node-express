@@ -5,6 +5,9 @@ import { bookingRoutes } from './routes/bookings'
 import { authenticateToken } from './middlewares/login';
 import { loginRoutes } from './controllers/loginController';
 import { infoRoute } from './routes/info';
+import { roomRoutes } from './routes/rooms';
+import { messageRoutes } from './routes/messages';
+import { userRoutes } from './routes/users';
 
 export const app = express();
 export const PORT = process.env.PORT;
@@ -18,4 +21,7 @@ app.use('/api/info', infoRoute)
 
 //private routes
 app.use('/api/bookings', authenticateToken, bookingRoutes);
+app.use('/api/rooms', authenticateToken, roomRoutes);
+app.use('/api/messages', authenticateToken, messageRoutes);
+app.use('/api/users', authenticateToken, userRoutes);
 
