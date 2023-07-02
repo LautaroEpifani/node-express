@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBooking = exports.deleteBooking = exports.postBooking = exports.getBooking = exports.getBookings = void 0;
 const bookingService_1 = require("../services/bookingService");
-//GET all bookings
+//GET all bookings from api 
 const getBookings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield (0, bookingService_1.getBookingsService)(req, res);
