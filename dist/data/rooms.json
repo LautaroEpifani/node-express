@@ -2,7 +2,7 @@
   {
     "id": "asdhjafeklfjlegf",
     "title": "Classic Double Bed B-12324",
-    "image": "",
+    "image": [],
     "room_type": "Double Bed",
     "room_number": 3,
     "amenities": [
@@ -27,7 +27,7 @@
   {
     "id": "asdwhagdhwhwrwrw",
     "title": "Luxury Room  D-1231",
-    "image": "",
+    "image": [],
     "room_type": "Double Superior",
     "room_number": 2,
     "amenities": [
@@ -52,7 +52,7 @@
   {
     "id": "asdjaojwdojwaiodie",
     "title": "Luxury Suite Room  X-1342",
-    "image": "",
+    "image": [],
     "room_type": "Suite",
     "room_number": 5,
     "amenities": [
@@ -77,7 +77,7 @@
   {
     "id": "efkjdkwalkdawlkdklaw",
     "title": "Queen Bed A-12324",
-    "image": "",
+    "image": [],
     "room_type": "Single Bed",
     "room_number": 10,
     "amenities": [
@@ -101,7 +101,7 @@
   {
     "id": "pewrpoewrpewporiepow",
     "title": "Queen double rich bed",
-    "image": "",
+    "image": [],
     "room_type": "Single Bed",
     "room_number": 10,
     "amenities": [
@@ -126,7 +126,7 @@
   {
     "id": "e6b8aecf-634a-22f3-c51b-3c8cfc96cb97",
     "title": "New Room",
-    "image": "",
+    "image": [],
     "room_type": "Double Bed",
     "room_number": 3,
     "amenities": [

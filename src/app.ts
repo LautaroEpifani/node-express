@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config()
 import express from 'express';
 import { bookingRoutes } from './routes/bookings'
@@ -8,6 +8,7 @@ import { infoRoute } from './routes/info';
 import { roomRoutes } from './routes/rooms';
 import { messageRoutes } from './routes/messages';
 import { userRoutes } from './routes/users';
+import serverless from 'serverless-http'
 
 export const app = express();
 export const PORT = process.env.PORT;
@@ -24,4 +25,6 @@ app.use('/api/bookings', authenticateToken, bookingRoutes);
 app.use('/api/rooms', authenticateToken, roomRoutes);
 app.use('/api/messages', authenticateToken, messageRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
+
+export const handler = serverless(app)
 

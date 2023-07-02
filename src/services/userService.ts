@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import express from "express";
 import { User } from "../models/models";
-import uuid from "react-uuid";
 
 const directory = path.join(__dirname, "..", "data", "users.json");
 const readUsers = fs.readFileSync(directory, "utf8");
@@ -19,7 +18,7 @@ export const getUserService = async (req: express.Request, res: express.Response
 };
 
 export const postUserService = async (req: express.Request, res: express.Response) => {
-  const newBooking: User = { ...req.body, id: uuid() };
+  const newBooking: User = { ...req.body, id: "askjdakefkj" };
   usersJson.push(newBooking);
   fs.writeFileSync(directory, JSON.stringify(usersJson));
   const newReadUsers = fs.readFileSync(directory, "utf8");

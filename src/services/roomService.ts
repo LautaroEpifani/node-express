@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import express from "express";
 import { Room } from "../models/models";
-import uuid from "react-uuid";
 
 const directory = path.join(__dirname, "..", "data", "rooms.json");
 const readRooms = fs.readFileSync(directory, "utf8");
@@ -19,7 +18,7 @@ export const getRoomService = async (req: express.Request, res: express.Response
 };
 
 export const postRoomService = async (req: express.Request, res: express.Response) => {
-  const newRoom: Room = { ...req.body, id: uuid() };
+  const newRoom: Room = { ...req.body, id: "ñlaskfñaslf" };
   roomsJson.push(newRoom);
   fs.writeFileSync(directory, JSON.stringify(roomsJson));
   const newReadRooms = fs.readFileSync(directory, "utf8");

@@ -27,7 +27,7 @@ export interface Message {
 export interface Room {
     id: string;
     title: string;
-    images: string;
+    images: string[];
     room_type: string;
     room_number: 10,
     amenities: Amenities[],
