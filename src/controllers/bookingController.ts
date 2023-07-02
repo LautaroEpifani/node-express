@@ -2,7 +2,7 @@ import express from "express";
 import { Booking } from "../models/models";
 import { deleteBookingService, getBookingService, getBookingsService, postBookingService, updateBookingService } from "../services/bookingService";
 
-//GET all bookings
+//GET all bookings from api 
 export const getBookings = async (req: express.Request, res: express.Response) => {
   try {
     const response = await getBookingsService(req, res);
