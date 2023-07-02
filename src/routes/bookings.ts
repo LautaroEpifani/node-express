@@ -1,10 +1,13 @@
 import express from 'express';
-import { deleteBooking, getBookings, postBooking, updateBooking } from '../controllers/bookingController';
+import { deleteBooking, getBooking, getBookings, postBooking, updateBooking } from '../controllers/bookingController';
 
 export const bookingRoutes = express.Router();
 
 //GET all bookings
 bookingRoutes.get('/', getBookings);
+
+//GET single booking
+bookingRoutes.get('/:id', getBooking);
 
 //POST new Booking
 bookingRoutes.post('/', postBooking);
