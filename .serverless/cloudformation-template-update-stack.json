@@ -74,7 +74,7 @@
     "AppLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/nodejs-aws-lambdados-dev-app"
+        "LogGroupName": "/aws/lambda/nodejs-aws-lambda-test-dev-app"
       }
     },
     "IamRoleLambdaExecution": {
@@ -102,7 +102,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "nodejs-aws-lambdados",
+                  "nodejs-aws-lambda-test",
                   "dev",
                   "lambda"
                 ]
@@ -120,7 +120,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambdados-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambda-test-dev*:*"
                     }
                   ]
                 },
@@ -131,7 +131,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambdados-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambda-test-dev*:*:*"
                     }
                   ]
                 }
@@ -144,7 +144,7 @@
           "Fn::Join": [
             "-",
             [
-              "nodejs-aws-lambdados",
+              "nodejs-aws-lambda-test",
               "dev",
               {
                 "Ref": "AWS::Region"
@@ -162,11 +162,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/nodejs-aws-lambdados/dev/1688330559105-2023-07-02T20:42:39.105Z/nodejs-aws-lambdados.zip"
+          "S3Key": "serverless/nodejs-aws-lambda-test/dev/1688333285815-2023-07-02T21:28:05.815Z/nodejs-aws-lambda-test.zip"
         },
         "Handler": "dist/app.handler",
         "Runtime": "nodejs18.x",
-        "FunctionName": "nodejs-aws-lambdados-dev-app",
+        "FunctionName": "nodejs-aws-lambda-test-dev-app",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
@@ -185,7 +185,7 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionnAEP1I7aKSirVfsoVjDsp9nlATDXUpZ1sN9BgM8ACw0": {
+    "AppLambdaVersiongA3XtvRjr6OjJPtCQnJF9H9nZVXub6neGITs3MSpM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
@@ -198,7 +198,7 @@
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-nodejs-aws-lambdados",
+        "Name": "dev-nodejs-aws-lambda-test",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -317,7 +317,7 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1688330556051": {
+    "ApiGatewayDeployment1688333282982": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -374,16 +374,16 @@
         "Ref": "ServerlessDeploymentBucket"
       },
       "Export": {
-        "Name": "sls-nodejs-aws-lambdados-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-nodejs-aws-lambda-test-dev-ServerlessDeploymentBucketName"
       }
     },
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionnAEP1I7aKSirVfsoVjDsp9nlATDXUpZ1sN9BgM8ACw0"
+        "Ref": "AppLambdaVersiongA3XtvRjr6OjJPtCQnJF9H9nZVXub6neGITs3MSpM"
       },
       "Export": {
-        "Name": "sls-nodejs-aws-lambdados-dev-AppLambdaFunctionQualifiedArn"
+        "Name": "sls-nodejs-aws-lambda-test-dev-AppLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {
@@ -409,7 +409,7 @@
         ]
       },
       "Export": {
-        "Name": "sls-nodejs-aws-lambdados-dev-ServiceEndpoint"
+        "Name": "sls-nodejs-aws-lambda-test-dev-ServiceEndpoint"
       }
     }
   }

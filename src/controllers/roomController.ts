@@ -1,12 +1,16 @@
 import express from "express";
 import { Room } from "../models/models";
-import { deleteRoomService, getRoomService, getRoomsService, postRoomService, updateRoomService } from "../services/roomService";
-
+import {
+  deleteSqlRoomService,
+  getSqlRoomService,
+  getSqlRoomsService,
+  postSqlRoomService,
+  updateSqlRoomService,
+} from "../sqlService/roomService";
 
 export const getRooms = async (req: express.Request, res: express.Response) => {
   try {
-    const response = await getRoomsService(req, res);
-    res.status(200).json(response);
+    await getSqlRoomsService(req, res);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -14,39 +18,31 @@ export const getRooms = async (req: express.Request, res: express.Response) => {
 
 export const getRoom = async (req: express.Request, res: express.Response) => {
   try {
-    const response = await getRoomService(req, res);
-    res.status(200).json(response);
+    await getSqlRoomService(req, res);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
-
-export const postRoom = async (req: express.Request<{},{},Room> , res: express.Response) => {
+export const postRoom = async (req: express.Request<{}, {}, Room>, res: express.Response) => {
   try {
-    const response = await postRoomService(req, res);
-    res.status(200).json(response);
+    await postSqlRoomService(req, res);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
-
-export const deleteRoom = async (req: express.Request<{id: string}>, res: express.Response) => {
+export const deleteRoom = async (req: express.Request<{ id: string }>, res: express.Response) => {
   try {
-    const response = await deleteRoomService(req, res);
-    res.status(200).json(response);
+    await deleteSqlRoomService(req, res);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 export const updateRoom = async (req: express.Request, res: express.Response) => {
- 
   try {
-    const response = await updateRoomService(req, res);
-    res.status(200).json(response);
+    await updateSqlRoomService(req, res);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }

@@ -1,7 +1,7 @@
 export interface Booking {
-  id: string;
-  image: string;
+  id: number;
   guest: string; 
+  room_id: number;
   room_type: string;
   room_number: number;
   special_request: string;
@@ -14,9 +14,9 @@ export interface Booking {
 }
 
 export interface Message {
-  date: string;
-  hour: string;
-  id: string;
+  date: Date;
+  hour: Date;
+  id: number;
   name: string;
   email: string;
   phone: string;
@@ -25,12 +25,12 @@ export interface Message {
 }
 
 export interface Room {
-    id: string;
+    id: number;
     title: string;
     images: string[];
     room_type: string;
-    room_number: 10,
-    amenities: Amenities[],
+    room_number: number;
+    amenities: Amenities[];
     price: number;
     discount: number;
     offer: string;
@@ -42,14 +42,15 @@ export interface Room {
 
 export interface Amenities {
   a_name: string;
-  icon: string
+  icon: string;
 }
 
 export interface User {
       employee_name: string;
-      id: string;
+      id: number;
       image: string;
       email: string;
+      password: string;
       start_date: Date;
       description: string;
       contact: string;

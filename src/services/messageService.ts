@@ -13,7 +13,7 @@ export const getMessagesService = async (req: express.Request, res: express.Resp
 
 export const getMessageService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  const message = messagesJson.find((message: Message) => message.id === id);
+  const message = messagesJson.find((message: Message) => message.id.toString() === id);
   res.send(JSON.stringify(message));
 };
 
@@ -27,7 +27,7 @@ export const postMessageService = async (req: express.Request, res: express.Resp
 
 export const deleteMessageService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  const newArray = messagesJson.filter((message: Message) => message.id !== id);
+  const newArray = messagesJson.filter((message: Message) => message.id.toString() !== id);
   fs.writeFileSync(directory, JSON.stringify(newArray));
   const newReadMessages = fs.readFileSync(directory, "utf8");
   res.send(newReadMessages);
@@ -36,10 +36,10 @@ export const deleteMessageService = async (req: express.Request, res: express.Re
 export const updateMessageService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
   let newArray: Message[] = [];
-  let message: Message | undefined = messagesJson.find((message: Message) => message.id === id);
+  let message: Message | undefined = messagesJson.find((message: Message) => message.id.toString() === id);
   message = { ...message, ...req.body };
   if (message) {
-    newArray = messagesJson.filter((messageFilt: Message) => messageFilt.id !== id);
+    newArray = messagesJson.filter((messageFilt: Message) => messageFilt.id.toString() !== id);
     newArray.push(message);
   }
   fs.writeFileSync(directory, JSON.stringify(newArray));

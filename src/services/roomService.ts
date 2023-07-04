@@ -13,7 +13,7 @@ export const getRoomsService = async (req: express.Request, res: express.Respons
 
 export const getRoomService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  const room = roomsJson.find((room: Room) => room.id === id);
+  const room = roomsJson.find((room: Room) => room.id.toString() === id);
   res.send(JSON.stringify(room));
 };
 
@@ -27,7 +27,7 @@ export const postRoomService = async (req: express.Request, res: express.Respons
 
 export const deleteRoomService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  const newArray = roomsJson.filter((room: Room) => room.id !== id);
+  const newArray = roomsJson.filter((room: Room) => room.id.toString() !== id);
   fs.writeFileSync(directory, JSON.stringify(newArray));
   const newReadRooms = fs.readFileSync(directory, "utf8");
   res.send(newReadRooms);
@@ -36,10 +36,10 @@ export const deleteRoomService = async (req: express.Request, res: express.Respo
 export const updateRoomService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
   let newArray: Room[] = [];
-  let room: Room | undefined = roomsJson.find((room: Room) => room.id === id);
+  let room: Room | undefined = roomsJson.find((room: Room) => room.id.toString() === id);
   room = { ...room, ...req.body };
   if (room) {
-    newArray = roomsJson.filter((roomFilt: Room) => roomFilt.id !== id);
+    newArray = roomsJson.filter((roomFilt: Room) => roomFilt.id.toString() !== id);
     newArray.push(room);
   }
   fs.writeFileSync(directory, JSON.stringify(newArray));

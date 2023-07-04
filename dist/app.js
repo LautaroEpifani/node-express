@@ -1,7 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+var __importDefault =
+  (this && this.__importDefault) ||
+  function (mod) {
+    return mod && mod.__esModule ? mod : { default: mod };
+  };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = exports.PORT = exports.app = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -19,12 +21,12 @@ exports.app = (0, express_1.default)();
 exports.PORT = process.env.PORT;
 //middleware
 exports.app.use(express_1.default.json());
-exports.app.use('/api/login', loginController_1.loginRoutes);
+exports.app.use("/api/login", loginController_1.loginRoutes);
 //public routes
-exports.app.use('/api/info', info_1.infoRoute);
+exports.app.use("/api/info", info_1.infoRoute);
 //private routes
-exports.app.use('/api/bookings', login_1.authenticateToken, bookings_1.bookingRoutes);
-exports.app.use('/api/rooms', login_1.authenticateToken, rooms_1.roomRoutes);
-exports.app.use('/api/messages', login_1.authenticateToken, messages_1.messageRoutes);
-exports.app.use('/api/users', login_1.authenticateToken, users_1.userRoutes);
+exports.app.use("/api/bookings", login_1.authenticateToken, bookings_1.bookingRoutes);
+exports.app.use("/api/rooms", login_1.authenticateToken, rooms_1.roomRoutes);
+exports.app.use("/api/messages", login_1.authenticateToken, messages_1.messageRoutes);
+exports.app.use("/api/users", login_1.authenticateToken, users_1.userRoutes);
 exports.handler = (0, serverless_http_1.default)(exports.app);

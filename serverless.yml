@@ -1,4 +1,4 @@
-service: nodejs-aws-lambdados
+service: nodejs-aws-lambda-test
 provider:
   name: aws
   region: eu-west-1
@@ -7,7 +7,7 @@ provider:
     TOKEN_SECRET: 49b3097265e88500d90d9e7a0c062b42d4fdaf1c84e65afd7ab7c5938d8c10a28f565573eaef1ea051609aa7a516c93c545e6b93fc8ded642d12f3c9e9b116ac
 functions:
   app:
-    handler: dist/app.handler
+    handler: dist/lambda.handler
     events:
       - http: ANY /
       - http: ANY /{proxy+}

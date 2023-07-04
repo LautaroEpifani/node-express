@@ -13,12 +13,12 @@ export const getUsersService = async (req: express.Request, res: express.Respons
 
 export const getUserService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  const user = usersJson.find((user: User) => user.id === id);
+  const user = usersJson.find((user: User) => user.id.toString() === id);
   res.send(JSON.stringify(user));
 };
 
 export const postUserService = async (req: express.Request, res: express.Response) => {
-  const newBooking: User = { ...req.body, id: "askjdakefkj" };
+  const newBooking: User = { ...req.body, id: 5 };
   usersJson.push(newBooking);
   fs.writeFileSync(directory, JSON.stringify(usersJson));
   const newReadUsers = fs.readFileSync(directory, "utf8");
@@ -27,7 +27,7 @@ export const postUserService = async (req: express.Request, res: express.Respons
 
 export const deleteUserService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  const newArray = usersJson.filter((user: User) => user.id !== id);
+  const newArray = usersJson.filter((user: User) => user.id.toString() !== id);
   fs.writeFileSync(directory, JSON.stringify(newArray));
   const newReadUsers = fs.readFileSync(directory, "utf8");
   res.send(newReadUsers);
@@ -36,10 +36,10 @@ export const deleteUserService = async (req: express.Request, res: express.Respo
 export const updateUserService = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
   let newArray: User[] = [];
-  let user: User | undefined = usersJson.find((user: User) => user.id === id);
+  let user: User | undefined = usersJson.find((user: User) => user.id.toString() === id);
   user = { ...user, ...req.body };
   if (user) {
-    newArray = usersJson.filter((userFilt: User) => userFilt.id !== id);
+    newArray = usersJson.filter((userFilt: User) => userFilt.id.toString() !== id);
     newArray.push(user);
   }
   fs.writeFileSync(directory, JSON.stringify(newArray));
