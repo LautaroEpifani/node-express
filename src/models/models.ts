@@ -2,7 +2,6 @@ export interface Booking {
   id: number;
   guest: string; 
   room_id: number;
-  room_type: string;
   room_number: number;
   special_request: string;
   order_date: Date;

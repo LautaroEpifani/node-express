@@ -4,15 +4,18 @@ import { deleteSqlUserService, getSqlUserService, getSqlUsersService, postSqlUse
 
 export const getUsers = async (req: express.Request, res: express.Response) => {
   try {
-    await getSqlUsersService(req, res);
+    const response = await getSqlUsersService();
+    res.status(200).send(response);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
 export const getUser = async (req: express.Request, res: express.Response) => {
+  const { id } = req.params;
   try {
-    await getSqlUserService(req, res);
+    const response = await getSqlUserService(id);
+    res.status(200).send(response);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -20,8 +23,10 @@ export const getUser = async (req: express.Request, res: express.Response) => {
 
 
 export const postUser = async (req: express.Request<{},{},User> , res: express.Response) => {
+  const newUser: User = { ...req.body };
   try {
-    await postSqlUserService(req, res);
+    const response = await postSqlUserService(newUser);
+    res.status(200).send(response);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -29,8 +34,10 @@ export const postUser = async (req: express.Request<{},{},User> , res: express.R
 
 
 export const deleteUser = async (req: express.Request<{id: string}>, res: express.Response) => {
+  const { id } = req.params;
   try {
-    await deleteSqlUserService(req, res);
+    const response = await deleteSqlUserService(id);
+    res.status(200).send(response);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -38,9 +45,11 @@ export const deleteUser = async (req: express.Request<{id: string}>, res: expres
 
 
 export const updateUser = async (req: express.Request, res: express.Response) => {
- 
+  const { id } = req.params;
+  const userUpdate: User = { ...req.body };
   try {
-    await updateSqlUserService(req, res);
+    const response = await updateSqlUserService(id, userUpdate);
+    res.status(200).send(response);
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }

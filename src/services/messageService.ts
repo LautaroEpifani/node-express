@@ -1,48 +1,37 @@
 import fs from "fs";
 import path from "path";
-import express from "express";
 import { Message } from "../models/models";
 
 const directory = path.join(__dirname, "..", "data", "messages.json");
-const readBookings = fs.readFileSync(directory, "utf8");
-const messagesJson = JSON.parse(readBookings);
+const readMessages = fs.readFileSync(directory, "utf8");
+const messagesJson = JSON.parse(readMessages);
 
-export const getMessagesService = async (req: express.Request, res: express.Response) => {
-  res.send(readBookings);
+export const getMessagesService = async () => {
+  return readMessages;
 };
 
-export const getMessageService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
+export const getMessageService = async (id: string) => {
   const message = messagesJson.find((message: Message) => message.id.toString() === id);
-  res.send(JSON.stringify(message));
+  return JSON.stringify(message);
 };
 
-export const postMessageService = async (req: express.Request, res: express.Response) => {
-  const newBooking: Message = { ...req.body, id: "aksdjalksjfl" };
-  messagesJson.push(newBooking);
+export const postMessageService = async (newMessage: Message) => {
+  messagesJson.push(newMessage);
   fs.writeFileSync(directory, JSON.stringify(messagesJson));
-  const newReadMessages = fs.readFileSync(directory, "utf8");
-  res.send(newReadMessages);
 };
 
-export const deleteMessageService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
+export const deleteMessageService = async (id: string) => {
   const newArray = messagesJson.filter((message: Message) => message.id.toString() !== id);
   fs.writeFileSync(directory, JSON.stringify(newArray));
-  const newReadMessages = fs.readFileSync(directory, "utf8");
-  res.send(newReadMessages);
 };
 
-export const updateMessageService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
+export const updateMessageService = async (id:string, newMessage: Message) => {
   let newArray: Message[] = [];
   let message: Message | undefined = messagesJson.find((message: Message) => message.id.toString() === id);
-  message = { ...message, ...req.body };
+  message = { ...message, ...newMessage };
   if (message) {
     newArray = messagesJson.filter((messageFilt: Message) => messageFilt.id.toString() !== id);
     newArray.push(message);
   }
   fs.writeFileSync(directory, JSON.stringify(newArray));
-  const newReadMessages = fs.readFileSync(directory, "utf8");
-  res.send(newReadMessages);
 };

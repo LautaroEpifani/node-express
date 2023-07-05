@@ -10,39 +10,49 @@ import {
 
 export const getRooms = async (req: express.Request, res: express.Response) => {
   try {
-    await getSqlRoomsService(req, res);
+    const response = await getSqlRoomsService();
+    res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
 export const getRoom = async (req: express.Request, res: express.Response) => {
+  const { id } = req.params;
   try {
-    await getSqlRoomService(req, res);
+    const response = await getSqlRoomService(id);
+    res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
 export const postRoom = async (req: express.Request<{}, {}, Room>, res: express.Response) => {
+  const newRoom: Room = { ...req.body };
   try {
-    await postSqlRoomService(req, res);
+    const response = await postSqlRoomService(newRoom);
+    res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
 export const deleteRoom = async (req: express.Request<{ id: string }>, res: express.Response) => {
+  const { id } = req.params;
   try {
-    await deleteSqlRoomService(req, res);
+    const response = await deleteSqlRoomService(id);
+    res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
 };
 
 export const updateRoom = async (req: express.Request, res: express.Response) => {
+  const { id } = req.params;
+  const roomUpdate: Room = { ...req.body };
   try {
-    await updateSqlRoomService(req, res);
+    const response = await updateSqlRoomService(id, roomUpdate);
+    res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }

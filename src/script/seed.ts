@@ -1,17 +1,15 @@
-import { Request, Response } from "express";
 import { pool } from "../pool";
 import { bookingsList } from "../faker/bookingsFaker";
 import { usersList } from "../faker/usersFaker";
 import { roomsList } from "../faker/roomsFaker";
 import { messagesList } from "../faker/messagesFaker";
 
-export const postBookingsSQL = () => {
+export const postBookingsSQL = async () => {
   if (bookingsList) {
     for (let i = 0; i < bookingsList.length; i++) {
       const {
         guest,
         room_id,
-        room_type,
         check_in,
         check_out,
         order_date,
@@ -21,63 +19,45 @@ export const postBookingsSQL = () => {
         color,
         bgrColor,
       } = bookingsList[i];
-      pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(
-          "INSERT INTO bookings VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
-          [
-            null,
-            guest,
-            room_id,
-            room_type,
-            check_in,
-            check_out,
-            order_date,
-            special_request,
-            status,
-            room_number,
-            color,
-            bgrColor,
-          ],
-          (err, rows) => {
-            connection.release();
-            if (!err) {
-              console.log("Bookings List Posted");
-            } else {
-              console.log(err);
-            }
-          }
-        );
-      });
+      await pool.query("INSERT INTO bookings VALUES(?,?,?,?,?,?,?,?,?,?,?)", [
+        null,
+        guest,
+        room_id,
+        check_in,
+        check_out,
+        order_date,
+        special_request,
+        status,
+        room_number,
+        color,
+        bgrColor,
+      ]);
     }
   }
 };
 
-export const postUsersSQL = () => {
+export const postUsersSQL = async () => {
   if (usersList) {
     for (let i = 0; i < usersList.length; i++) {
       const { employee_name, image, email, password, start_date, description, contact, status, position } =
         usersList[i];
-      pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(
-          "INSERT INTO users VALUES(?,?,?,?,?,?,?,?,?,?)",
-          [null, employee_name, image, email, password, start_date, description, contact, status, position],
-          (err, rows) => {
-            connection.release();
-            if (!err) {
-              console.log("Users List Posted");
-            } else {
-              console.log(err);
-            }
-          }
-        );
-      });
+      await pool.query("INSERT INTO users VALUES(?,?,?,?,?,?,?,?,?,?)", [
+        null,
+        employee_name,
+        image,
+        email,
+        password,
+        start_date,
+        description,
+        contact,
+        status,
+        position,
+      ]);
     }
   }
 };
 
-export const postRoomsSQL = () => {
+export const postRoomsSQL = async () => {
   if (roomsList) {
     for (let i = 0; i < roomsList.length; i++) {
       const {
@@ -94,58 +74,39 @@ export const postRoomsSQL = () => {
         cancellation,
         status,
       } = roomsList[i];
-      pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(
-          "INSERT INTO rooms VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
-          [
-            null,
-            title,
-            JSON.stringify(images),
-            room_type,
-            room_number,
-            JSON.stringify(amenities),
-            price,
-            discount,
-            offer,
-            offer_price,
-            description,
-            cancellation,
-            status,
-          ],
-          (err, rows) => {
-            connection.release();
-            if (!err) {
-              console.log("Rooms List Posted");
-            } else {
-              console.log(err);
-            }
-          }
-        );
-      });
+      await pool.query("INSERT INTO rooms VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+        null,
+        title,
+        JSON.stringify(images),
+        room_type,
+        room_number,
+        JSON.stringify(amenities),
+        price,
+        discount,
+        offer,
+        offer_price,
+        description,
+        cancellation,
+        status,
+      ]);
     }
   }
 };
 
-export const postMessagesSQL = () => {
+export const postMessagesSQL = async () => {
   if (messagesList) {
     for (let i = 0; i < messagesList.length; i++) {
       const { date, hour, name, email, phone, subject, comment } = messagesList[i];
-      pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(
-          "INSERT INTO messages VALUES(?,?,?,?,?,?,?,?)",
-          [null, date, hour, name, email, phone, subject, comment],
-          (err, rows) => {
-            connection.release();
-            if (!err) {
-              console.log("Messages List Posted");
-            } else {
-              console.log(err);
-            }
-          }
-        );
-      });
+      await pool.query("INSERT INTO messages VALUES(?,?,?,?,?,?,?,?)", [
+        null,
+        date,
+        hour,
+        name,
+        email,
+        phone,
+        subject,
+        comment,
+      ]);
     }
   }
 };

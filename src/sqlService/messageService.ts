@@ -1,102 +1,45 @@
-import express from "express";
 import { Message } from "../models/models";
 import { pool } from "../pool";
-import { postMessagesSQL } from "../script/seed";
 
-export const getSqlMessagesService = async (req: express.Request, res: express.Response) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query("SELECT * FROM messages", (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
+export const getSqlMessagesService = async () => {
+  const [rows] = await pool.query("SELECT * FROM messages");
+  return rows;
 };
 
-export const getSqlMessageService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`SELECT * FROM messages WHERE id = ${id}`, (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
+export const getSqlMessageService = async (id: string) => {
+  const [rows] = await pool.query(`SELECT * FROM messages WHERE id = ${id}`);
+  return rows;
 };
 
-export const postSqlMessageService = async (req: express.Request, res: express.Response) => {
-  const newMessage: Message = { ...req.body };
-  const { 
+export const postSqlMessageService = async (newMessage: Message) => {
+  const { date, hour, name, email, phone, subject, comment } = newMessage;
+  const [rows] = await pool.query("INSERT INTO messages VALUES(?,?,?,?,?,?,?,?)", [
+    null,
     date,
     hour,
     name,
     email,
     phone,
     subject,
-    comment } =
-    newMessage;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(
-      "INSERT INTO messages VALUES(?,?,?,?,?,?,?,?)",
-      [
-        null,
-        date,
-        hour,
-        name,
-        email,
-        phone,
-        subject,
-        comment
-      ],
-      (err, rows) => {
-        connection.release();
-        if (!err) {
-          res.status(200).send(rows);
-        } else {
-          console.log(err);
-        }
-      }
-    );
-  });
+    comment,
+  ]);
+  return rows;
 };
 
-export const deleteSqlMessageService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`DELETE FROM messages WHERE id = ${id}`, (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
-  
+export const deleteSqlMessageService = async (id: string) => {
+  const [rows] = await pool.query(`DELETE FROM messages WHERE id = ${id}`);
+  return rows;
 };
 
-export const updateSqlMessageService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`UPDATE messages SET name = 'Canyon' WHERE id = ${id}`, (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
-
+export const updateSqlMessageService = async (id: string, update: Message) => {
+  const [rows] = await pool.query(
+    "Update messages SET " +
+      Object.keys(update)
+        .map((key) => `${key} = ?`)
+        .join(", ") +
+      " WHERE id = " +
+      `${id}`,
+    [...Object.values(update)]
+  );
+  return rows;
 };

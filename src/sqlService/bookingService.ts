@@ -1,98 +1,49 @@
-import express from "express";
 import { Booking } from "../models/models";
 import { pool } from "../pool";
 
-export const getSqlBookingsService = async (req: express.Request, res: express.Response) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query("SELECT * FROM bookings", (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
+export const getSqlBookingsService = async () => {
+  const [rows] = await pool.query("SELECT * FROM bookings");
+  return rows;
 };
 
-export const getSqlBookingService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`SELECT * FROM bookings WHERE id = ${id}`, (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
+export const getSqlBookingService = async (id: string) => {
+  const [rows] = await pool.query(`SELECT * FROM bookings WHERE id = ${id}`);
+  return rows;
 };
 
-export const postSqlBookingService = async (req: express.Request, res: express.Response) => {
-  const newBooking: Booking = { ...req.body };
-  const { guest, room_id, room_type, check_in, check_out, order_date, special_request, status, room_number } =
+export const postSqlBookingService = async (newBooking: Booking) => {
+  const { guest, room_id, check_in, check_out, order_date, special_request, status, room_number } =
     newBooking;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(
-      "INSERT INTO bookings VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
-      [
-        null,
-        guest,
-        room_id,
-        room_type,
-        check_in,
-        check_out,
-        order_date,
-        special_request,
-        status,
-        room_number,
-        " ",
-        " ",
-      ],
-      (err, rows) => {
-        connection.release();
-        if (!err) {
-          res.status(200).send(rows);
-        } else {
-          console.log(err);
-        }
-      }
-    );
-  });
+  const [rows] = await pool.query("INSERT INTO bookings VALUES(?,?,?,?,?,?,?,?,?,?,?)", [
+    null,
+    guest,
+    room_id,
+    check_in,
+    check_out,
+    order_date,
+    special_request,
+    status,
+    room_number,
+    " ",
+    " ",
+  ]);
+  return rows;
 };
 
-export const deleteSqlBookingService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`DELETE FROM bookings WHERE id = ${id}`, (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
-  
+export const deleteSqlBookingService = async (id: string) => {
+  const [rows] = await pool.query(`DELETE FROM bookings WHERE id = ${id}`);
+  return rows;
 };
 
-export const updateSqlBookingService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`UPDATE bookings SET guest = 'Canyon' WHERE id = ${id}`, (err, rows) => {
-      connection.release();
-      if (!err) {
-        res.status(200).send(rows);
-      } else {
-        console.log(err);
-      }
-    });
-  });
-
+export const updateSqlBookingService = async (id: string, update: Booking) => {
+  const [rows] = await pool.query(
+    "Update bookings SET " +
+      Object.keys(update)
+        .map((key) => `${key} = ?`)
+        .join(", ") +
+      " WHERE id = " +
+      `${id}`,
+    [...Object.values(update)]
+  );
+  return rows;
 };

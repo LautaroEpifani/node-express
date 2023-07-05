@@ -1,48 +1,37 @@
 import fs from "fs";
 import path from "path";
-import express from "express";
 import { User } from "../models/models";
 
 const directory = path.join(__dirname, "..", "data", "users.json");
 const readUsers = fs.readFileSync(directory, "utf8");
 const usersJson = JSON.parse(readUsers);
 
-export const getUsersService = async (req: express.Request, res: express.Response) => {
-  res.send(readUsers);
+export const getUsersService = async () => {
+  return readUsers;
 };
 
-export const getUserService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
+export const getUserService = async (id: string) => {
   const user = usersJson.find((user: User) => user.id.toString() === id);
-  res.send(JSON.stringify(user));
+  return JSON.stringify(user);
 };
 
-export const postUserService = async (req: express.Request, res: express.Response) => {
-  const newBooking: User = { ...req.body, id: 5 };
-  usersJson.push(newBooking);
+export const postUserService = async (newUser: User) => {
+  usersJson.push(newUser);
   fs.writeFileSync(directory, JSON.stringify(usersJson));
-  const newReadUsers = fs.readFileSync(directory, "utf8");
-  res.send(newReadUsers);
 };
 
-export const deleteUserService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
+export const deleteUserService = async (id: string) => {
   const newArray = usersJson.filter((user: User) => user.id.toString() !== id);
   fs.writeFileSync(directory, JSON.stringify(newArray));
-  const newReadUsers = fs.readFileSync(directory, "utf8");
-  res.send(newReadUsers);
 };
 
-export const updateUserService = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
+export const updateUserService = async (id: string, newUser: User) => {
   let newArray: User[] = [];
   let user: User | undefined = usersJson.find((user: User) => user.id.toString() === id);
-  user = { ...user, ...req.body };
+  user = { ...user, ...newUser };
   if (user) {
     newArray = usersJson.filter((userFilt: User) => userFilt.id.toString() !== id);
     newArray.push(user);
   }
   fs.writeFileSync(directory, JSON.stringify(newArray));
-  const newReadUsers = fs.readFileSync(directory, "utf8");
-  res.send(newReadUsers);
 };
