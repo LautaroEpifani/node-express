@@ -1,10 +1,13 @@
 import express from "express";
 import { Booking } from "../models/models";
 import { deleteSqlBookingService, getSqlBookingService, getSqlBookingsService, postSqlBookingService, updateSqlBookingService } from "../sqlService/bookingService";
-import { postBookingsSQL, postMessagesSQL, postRoomsSQL, postUsersSQL } from "../script/seed";
+import { postBookingValidator, updateBookingValidator } from "../validators/bookingValidator";
+import { idValidator } from "../validators/idValidator";
+import { postBookingsSQL } from "../script/seed";
 
 //GET all bookings from api 
 export const getBookings = async (req: express.Request, res: express.Response) => {
+  postBookingsSQL()
   try {
     const response = await getSqlBookingsService();
     res.status(200).send(response)
@@ -28,7 +31,7 @@ export const getBooking = async (req: express.Request, res: express.Response) =>
 export const postBooking = async (req: express.Request<{},{},Booking> , res: express.Response) => {
   const newBooking: Booking = { ...req.body };
   try {
-      //postValid(booking)
+    postBookingValidator.validateAsync(newBooking);
     const response = await postSqlBookingService(newBooking);
     res.status(200).send(response)
   } catch (error: any) {
@@ -40,7 +43,7 @@ export const postBooking = async (req: express.Request<{},{},Booking> , res: exp
 export const deleteBooking = async (req: express.Request<{id: string}>, res: express.Response) => {
   const { id } = req.params;
   try {
-    //idValid
+    idValidator.validateAsync(parseInt(id));
     const response = await deleteSqlBookingService(id);
     res.status(200).json(response)
   } catch (error: any) {
@@ -49,12 +52,12 @@ export const deleteBooking = async (req: express.Request<{id: string}>, res: exp
 };
 
 //UPDATE booking
-export const updateBooking = async (req: express.Request, res: express.Response) => {
+export const updateBooking = async (req: express.Request<{id: string},{},Partial<Booking>>, res: express.Response) => {
   const { id } = req.params;
   const update = req.body;
   try {
-    //idValidator
-    //putValidator(booking)
+    idValidator.validateAsync(parseInt(id));
+    updateBookingValidator.validateAsync(update);
     const response = await updateSqlBookingService(id, update);
     res.status(200).json(response)
   } catch (error: any) {

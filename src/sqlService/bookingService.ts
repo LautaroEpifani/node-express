@@ -35,7 +35,7 @@ export const deleteSqlBookingService = async (id: string) => {
   return rows;
 };
 
-export const updateSqlBookingService = async (id: string, update: Booking) => {
+export const updateSqlBookingService = async (id: string, update: Partial<Booking>) => {
   const [rows] = await pool.query(
     "Update bookings SET " +
       Object.keys(update)

@@ -44,10 +44,16 @@ CREATE TABLE users(
     employee_name VARCHAR(50) NOT NULL,
     `image` TEXT NOT NULL,
     email VARCHAR(70) NOT NULL,
-    `password` VARCHAR(50) NOT NULL,
+    `password` TEXT NOT NULL,
     `start_date` DATE NOT NULL,
     `description` VARCHAR(255),
     contact VARCHAR(20) NOT NULL,
     `status`  ENUM('Active','Inactive') NOT NULL,
     position  VARCHAR(20) NOT NULL
 );
+
+-- CREATE TABLE bookings_rooms(
+--     id: INT AUTO_INCREMENT PRIMARY KEY,
+--     booking_id: INT,
+--     room_id: INT,
+-- );

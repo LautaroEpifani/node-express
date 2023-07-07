@@ -1,7 +1,11 @@
 import { User } from "../models/models";
 import { pool } from "../pool";
+import { hashPassword } from "../utils";
+
+
 
 export const getSqlUsersService = async () => {
+  console.log(hashPassword("123"))
   const [rows] = await pool.query("SELECT * FROM users");
   return rows;
 };
@@ -19,7 +23,7 @@ export const postSqlUserService = async (newUser: User) => {
     employee_name,
     image,
     email,
-    password,
+    hashPassword(password),
     start_date,
     description,
     contact,

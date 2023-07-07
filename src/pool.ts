@@ -4,6 +4,6 @@ export const pool = createPool({
     connectionLimit: 10,
     host: 'localhost',
     user: 'root',
-    password: 'mypassword',
+    password: process.env.MYSQL,
     database: 'node_express_api',
 })

@@ -6,7 +6,7 @@ export const generateBookings = () => {
     for (let i = 1; i <= 10; i++) {
       const id = i;
       const guest = faker.person.fullName();
-      const room_id = faker.number.int({ min: 0, max: 10 });
+      const room_id = faker.number.int({ min: 1, max: 10 });
       const check_in = faker.date.anytime();
       const check_out = faker.date.anytime();
       const order_date = faker.date.anytime();

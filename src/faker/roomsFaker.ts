@@ -14,7 +14,7 @@ export const generateRooms = () => {
     const discount =  faker.number.int({ min: 0, max: 100 });
     const offer = faker.helpers.arrayElement(["yes", "no"]);;
     const offer_price = price - (price * discount) / 100;
-    const description = faker.lorem.lines(4);
+    const description = faker.lorem.lines(2);
     const cancellation = faker.lorem.lines(8);
     const status = faker.helpers.arrayElement(["Available", "Booked"]);
   

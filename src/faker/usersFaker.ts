@@ -11,7 +11,7 @@ export const generateUsers = () => {
     const email = faker.internet.email();
     const password = hashPassword(faker.string.alpha(10));
     const start_date = faker.date.anytime();
-    const description = faker.lorem.lines(4);
+    const description = faker.lorem.lines(2);
     const contact = faker.phone.imei();
     const status = faker.helpers.arrayElement(["Active", "Inactive"]);
     const position = faker.helpers.arrayElement(["Manager", "Reception", "Room Service"]);

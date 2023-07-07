@@ -10,7 +10,7 @@ export const generateMessages = () => {
     const name = faker.person.fullName();
     const email = faker.internet.email();
     const phone = faker.phone.imei();
-    const subject = faker.lorem.lines(1);
+    const subject = faker.word.adverb();
     const comment = faker.lorem.lines(6);
 
     messages.push({
