@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Message } from "../models/models";
+import { Message } from "../interfaces/interfaces";
 
 export const generateMessages = () => {
   let messages: Message[] = [];

@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Booking } from "../models/models";
+import { Booking } from "../interfaces/interfaces";
 
 export const generateBookings = () => {
     let bookings: Booking[] = [];

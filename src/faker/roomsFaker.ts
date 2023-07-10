@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Room } from "../models/models";
+import { Room } from "../interfaces/interfaces";
 
 export const generateRooms = () => {
     let rooms: Room[] = [];

@@ -1,4 +1,4 @@
-import { Room } from "../models/models";
+import { Room } from "../interfaces/interfaces";
 import { pool } from "../pool";
 
 export const getSqlRoomsService = async () => {

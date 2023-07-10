@@ -1,5 +1,5 @@
 import express from "express";
-import { Room } from "../models/models";
+import { Room } from "../interfaces/interfaces";
 import {
   deleteSqlRoomService,
   getSqlRoomService,

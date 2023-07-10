@@ -17,7 +17,7 @@ app.use(express.json());
 app.use('/api/login',  loginRoutes);
 
 //public routes
-app.use('/api/info', infoRoute)
+app.use('/api/info', infoRoute);
 
 //private routes
 app.use('/api/bookings', authenticateToken, bookingRoutes);

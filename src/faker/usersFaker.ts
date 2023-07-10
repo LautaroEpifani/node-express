@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { User } from "../models/models";
+import { User } from "../interfaces/interfaces";
 import { hashPassword } from "../utils";
 
 export const generateUsers = () => {

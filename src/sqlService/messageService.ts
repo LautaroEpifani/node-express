@@ -1,4 +1,4 @@
-import { Message } from "../models/models";
+import { Message } from "../interfaces/interfaces";
 import { pool } from "../pool";
 
 export const getSqlMessagesService = async () => {

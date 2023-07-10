@@ -1,4 +1,4 @@
-import { Booking } from "../models/models";
+import { Booking } from "../interfaces/interfaces";
 import { pool } from "../pool";
 
 export const getSqlBookingsService = async () => {

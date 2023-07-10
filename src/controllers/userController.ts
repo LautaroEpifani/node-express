@@ -1,5 +1,5 @@
 import express from "express";
-import { User } from "../models/models";
+import { User } from "../interfaces/interfaces";
 import { deleteSqlUserService, getSqlUserService, getSqlUsersService, postSqlUserService, updateSqlUserService } from "../sqlService/userService";
 import { idValidator } from "../validators/idValidator";
 import { postUserValidator, updateUserValidator } from "../validators/userValidator";

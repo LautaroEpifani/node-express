@@ -1,15 +1,15 @@
 import express from "express";
-import { Booking } from "../models/models";
+import { Booking } from "../interfaces/interfaces";
 import { deleteSqlBookingService, getSqlBookingService, getSqlBookingsService, postSqlBookingService, updateSqlBookingService } from "../sqlService/bookingService";
 import { postBookingValidator, updateBookingValidator } from "../validators/bookingValidator";
 import { idValidator } from "../validators/idValidator";
-import { postBookingsSQL } from "../script/seed";
+import { deleteMongoBookingService, getMongoBookingService, getMongoBookingsService, postMongoBookingService, updateMongoBookingService } from "../mongoService/bookingService";
+import mongoose from "mongoose";
 
 //GET all bookings from api 
 export const getBookings = async (req: express.Request, res: express.Response) => {
-  postBookingsSQL()
   try {
-    const response = await getSqlBookingsService();
+    const response = await getMongoBookingsService();
     res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
@@ -19,12 +19,17 @@ export const getBookings = async (req: express.Request, res: express.Response) =
 //GET booking by id
 export const getBooking = async (req: express.Request, res: express.Response) => {
   const { id } = req.params;
-  try {
-    const response = await getSqlBookingService(id);
-    res.status(200).send(response)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
+  if(mongoose.Types.ObjectId.isValid(id)) {
+    try {
+      const response = await getMongoBookingService(id);
+      res.status(200).send(response)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(404).json({error: 'No such booking'})
   }
+ 
 };
 
 //POST new Booking
@@ -32,8 +37,8 @@ export const postBooking = async (req: express.Request<{},{},Booking> , res: exp
   const newBooking: Booking = { ...req.body };
   try {
     postBookingValidator.validateAsync(newBooking);
-    const response = await postSqlBookingService(newBooking);
-    res.status(200).send(response)
+    const response = await postMongoBookingService(newBooking);
+    res.status(200).send(response + ". Booking added with success")
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -42,12 +47,15 @@ export const postBooking = async (req: express.Request<{},{},Booking> , res: exp
 //DELETE booking
 export const deleteBooking = async (req: express.Request<{id: string}>, res: express.Response) => {
   const { id } = req.params;
-  try {
-    idValidator.validateAsync(parseInt(id));
-    const response = await deleteSqlBookingService(id);
-    res.status(200).json(response)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
+  if(mongoose.Types.ObjectId.isValid(id)) {
+    try {
+      const response = await deleteMongoBookingService(id);
+      res.status(200).json(response + ". Booking deleted with success")
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(404).json({error: 'No such booking'})
   }
 };
 
@@ -55,13 +63,16 @@ export const deleteBooking = async (req: express.Request<{id: string}>, res: exp
 export const updateBooking = async (req: express.Request<{id: string},{},Partial<Booking>>, res: express.Response) => {
   const { id } = req.params;
   const update = req.body;
-  try {
-    idValidator.validateAsync(parseInt(id));
-    updateBookingValidator.validateAsync(update);
-    const response = await updateSqlBookingService(id, update);
-    res.status(200).json(response)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
+  if(mongoose.Types.ObjectId.isValid(id)) {
+    try {
+      updateBookingValidator.validateAsync(update);
+      const response = await updateMongoBookingService(id, update);
+      res.status(200).json(response + "\n\n Booking updated with success")
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(404).json({error: 'No such booking'})
   }
 };
 

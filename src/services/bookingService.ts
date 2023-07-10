@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { Booking } from "../models/models";
+import { Booking } from "../interfaces/interfaces";
 
 const directory = path.join(__dirname, "..", "data", "bookings.json");
 const readBookings = fs.readFileSync(directory, "utf8");

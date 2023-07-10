@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { Message } from "../models/models";
+import { Message } from "../interfaces/interfaces";
 
 const directory = path.join(__dirname, "..", "data", "messages.json");
 const readMessages = fs.readFileSync(directory, "utf8");
