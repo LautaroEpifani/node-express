@@ -14,7 +14,7 @@ export interface Booking {
 
 export interface Message {
   date: Date;
-  hour: Date;
+  hour: string;
   id: number;
   name: string;
   email: string;

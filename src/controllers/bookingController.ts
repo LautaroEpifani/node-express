@@ -1,8 +1,6 @@
 import express from "express";
 import { Booking } from "../interfaces/interfaces";
-import { deleteSqlBookingService, getSqlBookingService, getSqlBookingsService, postSqlBookingService, updateSqlBookingService } from "../sqlService/bookingService";
 import { postBookingValidator, updateBookingValidator } from "../validators/bookingValidator";
-import { idValidator } from "../validators/idValidator";
 import { deleteMongoBookingService, getMongoBookingService, getMongoBookingsService, postMongoBookingService, updateMongoBookingService } from "../mongoService/bookingService";
 import mongoose from "mongoose";
 
@@ -67,7 +65,7 @@ export const updateBooking = async (req: express.Request<{id: string},{},Partial
     try {
       updateBookingValidator.validateAsync(update);
       const response = await updateMongoBookingService(id, update);
-      res.status(200).json(response + "\n\n Booking updated with success")
+      res.status(200).json(response + ". Booking updated with success")
     } catch (error: any) {
       res.status(400).json({ error: error.message });
     }

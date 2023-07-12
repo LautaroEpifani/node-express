@@ -2,6 +2,7 @@ import { PORT, app } from "./app";
 import mongoose from 'mongoose';
 
 //connect to mongoDb
+const connectDb = () => { 
 mongoose.connect(process.env.MONGO_URI as string)
 .then(() => {
     app.listen(PORT, () => {
@@ -11,4 +12,6 @@ mongoose.connect(process.env.MONGO_URI as string)
 .catch((error) => {
     console.log(error)
 });
+}
 
+export default connectDb;

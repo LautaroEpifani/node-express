@@ -6,7 +6,7 @@ export const generateMessages = () => {
   for (let i = 1; i <= 10; i++) {
     const id = i;
     const date = faker.date.anytime();
-    const hour = faker.date.anytime();
+    const hour = i + ":" + i*4;
     const name = faker.person.fullName();
     const email = faker.internet.email();
     const phone = faker.phone.imei();

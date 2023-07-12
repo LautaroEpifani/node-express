@@ -7,9 +7,9 @@ export const generateRooms = () => {
       const id = i;
      const  title = faker.commerce.productAdjective();
     const images = [faker.image.urlLoremFlickr()];
-    const room_type = faker.commerce.productAdjective();
+    const room_type = faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Suite']);
     const room_number = faker.number.int({ min: 0, max: 10 });
-    const amenities = [{a_name:"", icon:""}];
+    const amenities = [{a_name:"wifi", icon:"wifi"}];
     const price = faker.number.int({ min: 300, max: 500 });
     const discount =  faker.number.int({ min: 0, max: 100 });
     const offer = faker.helpers.arrayElement(["yes", "no"]);;

@@ -10,7 +10,7 @@
     "build": "rimraf dist && tsc",
     "build:prod": "npm run build && rimraf node_modules && npm i --omit=dev",
     "deploy": "npm run build:prod && serverless deploy --force && npm ci",
-    "seed": "ts-node-dev src/script/seed.ts"
+    "seed": "ts-node src/script/seedMongo.ts"
   },
   "author": "",
   "license": "ISC",

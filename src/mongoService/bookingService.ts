@@ -1,6 +1,5 @@
 import { Booking } from "../interfaces/interfaces";
 import { bookingModel } from "../models/bookings";
-import { pool } from "../pool";
 
 export const getMongoBookingsService = async () => {
   const bookings = await bookingModel.find({}).sort({createdAt: -1})
