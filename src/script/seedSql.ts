@@ -9,7 +9,7 @@ export const postBookingsSQL = async () => {
     for (let i = 0; i < bookingsList.length; i++) {
       const {
         guest,
-        room_id,
+        // room_id,
         check_in,
         check_out,
         order_date,
@@ -22,7 +22,7 @@ export const postBookingsSQL = async () => {
       await pool.query("INSERT INTO bookings VALUES(?,?,?,?,?,?,?,?,?,?,?)", [
         null,
         guest,
-        room_id,
+        // room_id,
         check_in,
         check_out,
         order_date,

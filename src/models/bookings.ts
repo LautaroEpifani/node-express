@@ -8,8 +8,8 @@ const bookingSchema = new Schema({
     required: true
   },
   room_id: {
-    type: Number,
-    required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Room",
   },
   room_number: {
     type: Number,

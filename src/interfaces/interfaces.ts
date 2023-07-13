@@ -1,7 +1,9 @@
+import mongoose from "mongoose";
+
 export interface Booking {
   id: number;
   guest: string; 
-  room_id: number;
+  room_id: mongoose.Types.ObjectId;
   room_number: number;
   special_request: string;
   order_date: Date;
@@ -37,6 +39,7 @@ export interface Room {
     description: string;
     cancellation: string;
     status: string;
+    bookings: Booking[] | [];
   }
 
 export interface Amenities {

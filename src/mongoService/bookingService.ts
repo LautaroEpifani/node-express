@@ -1,5 +1,6 @@
-import { Booking } from "../interfaces/interfaces";
+import { Booking, Room } from "../interfaces/interfaces";
 import { bookingModel } from "../models/bookings";
+import { roomModel } from "../models/rooms";
 
 export const getMongoBookingsService = async () => {
   const bookings = await bookingModel.find({}).sort({createdAt: -1})
@@ -12,7 +13,12 @@ export const getMongoBookingService = async (id: string) => {
 };
 
 export const postMongoBookingService = async (newBooking: Booking) => {
-  const addBooking = await bookingModel.create(newBooking);
+  const room = await roomModel.findOne({ room_number: newBooking.room_number })
+  const addBooking = await bookingModel.create({...newBooking, room_id: room?._id});
+  room?.bookings.push(addBooking._id);
+  await roomModel.findOneAndUpdate({_id: room?.id}, {
+    ...room
+  })
   return addBooking;
 };
 

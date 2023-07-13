@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Room } from "../interfaces/interfaces";
+import { Booking, Room } from "../interfaces/interfaces";
 
 export const generateRooms = () => {
     let rooms: Room[] = [];
@@ -13,10 +13,11 @@ export const generateRooms = () => {
     const price = faker.number.int({ min: 300, max: 500 });
     const discount =  faker.number.int({ min: 0, max: 100 });
     const offer = faker.helpers.arrayElement(["yes", "no"]);;
-    const offer_price = price - (price * discount) / 100;
+    const offer_price = parseInt((price - (price * discount) / 100).toFixed(0));
     const description = faker.lorem.lines(2);
     const cancellation = faker.lorem.lines(8);
     const status = faker.helpers.arrayElement(["Available", "Booked"]);
+    const bookings: Booking[] | [] = [];
   
       rooms.push({
         id,
@@ -31,7 +32,8 @@ export const generateRooms = () => {
         offer_price,
         description,
         cancellation,
-        status
+        status,
+        bookings
       });
     }
     return rooms;

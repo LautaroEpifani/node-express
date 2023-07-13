@@ -1,4 +1,5 @@
 import { Room } from "../interfaces/interfaces";
+import { bookingModel } from "../models/bookings";
 import { roomModel } from "../models/rooms";
 
 export const getMongoRoomsService = async () => {
