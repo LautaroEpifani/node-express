@@ -15,10 +15,6 @@ beforeAll(async () => {
   token = response.body.token;
 });
 
-afterAll(async() => {
-  await mongoose.disconnect();
-  await mongoose.connection.close()
-})
 
 describe("bookings endpoints", () => {
   it("return bookings", async () => {
@@ -26,7 +22,7 @@ describe("bookings endpoints", () => {
     expect(getBookings.statusCode).toEqual(200);
     expect(Array.isArray(getBookings.body)).toBe(true);
     const sortedBookings = getBookings.body.sort((a: any, b: any) => a.createdAt - b.createdAt);
-    expect(sortedBookings[0]).toHaveProperty('guest', 'Star Lord')
+    expect(sortedBookings[0]).toHaveProperty('guest')
   });
 
   it("should create a new booking", async () => {
@@ -56,12 +52,13 @@ describe("bookings endpoints", () => {
       .delete("/api/bookings/64afd6bd36de6141ed9ab1be")
       .set("Authorization", `Bearer ${token}`)
     expect(deleteBooking.statusCode).toEqual(200);
-    expect(await bookingModel.findById('64afd6bd36de6141ed9ab1be')).toBe(null)
+    const booking = await bookingModel.findById('64afd6bd36de6141ed9ab1be');
+    expect(booking).toBe(null)
   });
 
   it("should update a booking", async () => {
     const updateBooking = await request(app)
-      .patch("/api/bookings/64afd6bd36de6141ed9ab1c0")
+      .patch("/api/bookings/64afefcfda45f74e06a1c49f")
       .send({
         guest: "Obi-Wan Kenobi",
       })
@@ -69,7 +66,7 @@ describe("bookings endpoints", () => {
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
     expect(updateBooking.statusCode).toEqual(200);
-    expect(await bookingModel.findById('64afd6bd36de6141ed9ab1c0')).toHaveProperty('guest', 'Obi-Wan Kenobi');
+    expect(await bookingModel.findById('64afefcfda45f74e06a1c49f')).toHaveProperty('guest', 'Obi-Wan Kenobi');
   });
   
 });

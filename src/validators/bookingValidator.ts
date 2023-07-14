@@ -11,7 +11,7 @@ export const postBookingValidator = joi.object({
     room_number: joi.number().integer().positive().required(),
     status: joi.string().valid('Check In', 'Check Out', 'In Progress').required(),
     color: "",
-    bgr_color: "",
+    bgrColor: "",
 })
 
 export const updateBookingValidator = joi.object({
@@ -24,5 +24,5 @@ export const updateBookingValidator = joi.object({
     room_number: joi.number().optional(),
     status: joi.string().valid('Check In', 'Check Out', 'In Progress').optional(),
     color: "",
-    bgr_color: "",
+    bgrColor: "",
 })
