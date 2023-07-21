@@ -32,6 +32,10 @@ const messageSchema = new Schema(
       type: String,
       required: true,
     },
+    archived: {
+      type: Boolean,
+      required: true,
+    },
   },
   { timestamps: true }
 );

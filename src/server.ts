@@ -15,6 +15,6 @@ const connectDb = () => {
     });
 };
 
-// connectDb();
+connectDb();
 
 export default connectDb;

@@ -2,7 +2,8 @@ import joi from 'joi';
 
 
 export const postRoomValidator = joi.object({
-    title: joi.string().max(50).required(),
+    _id: joi.string().max(100).optional(),
+    id: joi.string().max(100).required(),
     images: joi.array().required(),
     room_type: joi.string().valid('Double Bed', 'Single Bed', 'Suite').required(),
     room_number: joi.number().integer().positive().required(),
@@ -14,10 +15,12 @@ export const postRoomValidator = joi.object({
     description: joi.string().max(500).required(),
     cancellation: joi.string().max(800).required(),
     status: joi.string().valid('Available', 'Booked').required(),
+    bookings: joi.array().required(),
 })
 
 export const updateRoomValidator = joi.object({
-    title: joi.string().max(50).optional(),
+    _id: joi.string().max(100).optional(),
+    id: joi.string().max(100).optional(),
     images: joi.array().optional(),
     room_type: joi.string().valid('Double Bed', 'Single Bed', 'Suite').optional(),
     room_number: joi.number().integer().positive().optional(),
@@ -29,4 +32,5 @@ export const updateRoomValidator = joi.object({
     description: joi.string().max(500).optional(),
     cancellation: joi.string().max(800).optional(),
     status: joi.string().valid('Available', 'Booked').optional(),
+    bookings: joi.array().optional(),
 })

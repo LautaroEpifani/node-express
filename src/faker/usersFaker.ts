@@ -15,13 +15,13 @@ export const generateUsers = () => {
     const contact = faker.phone.imei();
     const status = faker.helpers.arrayElement(["Active", "Inactive"]);
     const position = faker.helpers.arrayElement(["Manager", "Reception", "Room Service"]);
-
+    console.log(email + " --- " + password);
     users.push({
       id,
       employee_name,
       image,
       email,
-      password,
+      password: hashPassword(password),
       start_date,
       description,
       contact,

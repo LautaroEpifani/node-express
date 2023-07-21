@@ -7,6 +7,10 @@ const bookingSchema = new Schema({
     type: String,
     required: true
   },
+  id: {
+    type: String,
+    required: true
+  },
   room_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Room",
@@ -20,15 +24,15 @@ const bookingSchema = new Schema({
     required: true
   },
   order_date: {
-    type: Date,
+    type: String,
     required: true
   },
   check_in: {
-    type: Date,
+    type: String,
     required: true
   },
   check_out: {
-    type: Date,
+    type: String,
     required: true
   },
   status: {

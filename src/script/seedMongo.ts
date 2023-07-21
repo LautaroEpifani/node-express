@@ -31,7 +31,8 @@ const postMessagesMongo = async () => {
   messageModel.insertMany(messagesList);
 };
 
-postBookingsMongo();
+// postBookingsMongo();
 // postRoomsMongo();
-// postUsersMongo();
+postUsersMongo();
 // postMessagesMongo();
+

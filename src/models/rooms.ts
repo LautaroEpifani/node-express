@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const roomSchema = new Schema(
   {
-    title: {
+    id: {
       type: String,
       required: true,
     },
@@ -18,10 +18,12 @@ const roomSchema = new Schema(
       type: Number,
       required: true,
     },
-    bookings: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Booking",
-    }],
+    bookings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Booking",
+      },
+    ],
     amenities: [
       {
         a_name: {
