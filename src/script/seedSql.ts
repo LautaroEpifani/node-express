@@ -61,7 +61,7 @@ export const postRoomsSQL = async () => {
   if (roomsList) {
     for (let i = 0; i < roomsList.length; i++) {
       const {
-        title,
+
         images,
         room_type,
         room_number,
@@ -76,7 +76,7 @@ export const postRoomsSQL = async () => {
       } = roomsList[i];
       await pool.query("INSERT INTO rooms VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", [
         null,
-        title,
+    
         JSON.stringify(images),
         room_type,
         room_number,

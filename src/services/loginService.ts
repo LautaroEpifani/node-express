@@ -1,4 +1,3 @@
-import express from "express";
 import jwt from "jsonwebtoken";
 import { hashPassword } from "../utils";
 import { userModel } from "../models/users";
@@ -12,6 +11,6 @@ export const loginService = async (email: string, password: string) => {
     const token = jwt.sign({ ...user, id: null }, process.env.TOKEN_SECRET as string, {
       expiresIn: 1800,
     });
-    return { auth: true, token };
+    return { auth: true, token: token };
   }
 };

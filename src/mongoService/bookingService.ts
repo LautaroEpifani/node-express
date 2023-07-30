@@ -3,7 +3,7 @@ import { bookingModel } from "../models/bookings";
 import { roomModel } from "../models/rooms";
 
 export const getMongoBookingsService = async () => {
-  const bookings = await bookingModel.find({}).sort({createdAt: -1})
+  const bookings = await bookingModel.find({}).sort({createdAt: -1});
   return bookings;
 };
 

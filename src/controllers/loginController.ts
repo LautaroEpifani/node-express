@@ -8,10 +8,11 @@ const loginController = async (req: express.Request , res: express.Response) => 
   const { email, password } = req.body;
     try {
       const response = await loginService(email, password);
-      res.status(200).json(response);
+      const str = JSON.stringify(response);
+      res.status(200).send(response);
     
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.status(400).send(JSON.stringify({ error: error.message }));
     }
   };
 

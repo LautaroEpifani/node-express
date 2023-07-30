@@ -2,13 +2,11 @@ import { bookingModel } from "../models/bookings";
 import { roomModel } from "../models/rooms";
 import { userModel } from "../models/users";
 import { messageModel } from "../models/messages";
-import connectDb from "../server";
 import { bookingsList } from "../faker/bookingsFaker";
 import { roomsList } from "../faker/roomsFaker";
 import { messagesList } from "../faker/messagesFaker";
 import { usersList } from "../faker/usersFaker";
 
-connectDb();
 
 
 async function postBookingsMongo() {
@@ -31,8 +29,8 @@ const postMessagesMongo = async () => {
   messageModel.insertMany(messagesList);
 };
 
-// postBookingsMongo();
+postBookingsMongo();
 // postRoomsMongo();
-postUsersMongo();
+// postUsersMongo();
 // postMessagesMongo();
 

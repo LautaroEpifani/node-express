@@ -6,13 +6,11 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "ts-node src/server.ts",
-    "build": "rimraf dist && tsc",
-    "build:prod": "npm run build && rimraf node_modules && npm i --omit=dev",
+    "build": "rimraf dist && tsc && node_modules ",
     "deploy": "npm run build:prod && serverless deploy --force && npm ci",
     "seed": "ts-node src/script/seedMongo.ts",
     "test": "jest"
   },
-  "proxy": "http://localhost:3000",
   "author": "",
   "license": "ISC",
   "dependencies": {

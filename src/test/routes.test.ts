@@ -1,13 +1,11 @@
 import request from "supertest";
 import { app } from "../app";
-import connectDb from "../server";
 import mongoose from "mongoose";
 import { bookingModel } from "../models/bookings";
 
 let token = "";
 
 beforeAll(async () => {
-  connectDb();
   const response = await request(app).post("/api/login").send({
     email: "carlos@gmail.com",
     password: "asdasd123",

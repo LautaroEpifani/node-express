@@ -13,7 +13,6 @@ export const getSqlRoomService = async (id: string) => {
 
 export const postSqlRoomService = async (newRoom: Room) => {
   const {
-    title,
     images,
     room_type,
     room_number,
@@ -28,7 +27,6 @@ export const postSqlRoomService = async (newRoom: Room) => {
   } = newRoom;
   const [rows] = await pool.query("INSERT INTO rooms VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", [
     null,
-    title,
     JSON.stringify(images),
     room_type,
     room_number,

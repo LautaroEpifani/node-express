@@ -13,10 +13,10 @@ export const generateBookings = () => {
     const id = uuid();
     const guest = faker.person.fullName();
     const room_id = faker.helpers.arrayElement([
-      obId("64b6adcdc1d5d80332ce857e"),
-      obId("64b6adcdc1d5d80332ce8542"),
-      obId("64b6adcdc1d5d80332ce8538"),
-      obId("64b6adccc1d5d80332ce852e"),
+      obId("64ba961c39c6d79195072288"),
+      obId("64ba961c39c6d79195072288"),
+      obId("64ba961c39c6d7919507229c"),
+      obId("64ba961c39c6d791950722a6"),
     ]);
     const check_in = faker.date.anytime();
     const check_out = faker.date.anytime();

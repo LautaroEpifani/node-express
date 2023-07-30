@@ -13,8 +13,11 @@ export const app = express();
 export const PORT = process.env.PORT;
 const corsOptions = {
     // optionsSuccessStatus: 200,
-    // credentials: true, 
-    origin: ["http://localhost:3000"],
+    credentials: true, 
+    origin: "http://mirandadashboard.s3-website-eu-west-1.amazonaws.com",
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+     },
 };
 
 //middleware
@@ -33,7 +36,7 @@ app.use((req, res, next) => {
 app.use('/api/info', infoRoute);
 
 //private routes
-app.use('/api/bookings', authenticateToken, bookingRoutes);
+app.use('/api/bookings',bookingRoutes);
 app.use('/api/rooms', authenticateToken, roomRoutes);
 app.use('/api/messages', authenticateToken, messageRoutes);
 app.use('/api/users', authenticateToken, userRoutes);
