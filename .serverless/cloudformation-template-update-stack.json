@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/nodejs-aws-lambda-mongo/dev/1690587920238-2023-07-28T23:45:20.238Z/nodejs-aws-lambda-mongo.zip"
+          "S3Key": "serverless/nodejs-aws-lambda-mongo/dev/1691146906972-2023-08-04T11:01:46.972Z/nodejs-aws-lambda-mongo.zip"
         },
         "Handler": "dist/lambda.handler",
         "Runtime": "nodejs18.x",
@@ -172,7 +172,8 @@
         "Environment": {
           "Variables": {
             "MONGO_URI": "mongodb+srv://Lautaro:lG08glKDs2UO7EP9@mernapp.z3ipbfe.mongodb.net/?retryWrites=true&w=majority",
-            "TOKEN_SECRET": "49b3097265e88500d90d9e7a0c062b42d4fdaf1c84e65afd7ab7c5938d8c10a28f565573eaef1ea051609aa7a516c93c545e6b93fc8ded642d12f3c9e9b116ac"
+            "TOKEN_SECRET": "49b3097265e88500d90d9e7a0c062b42d4fdaf1c84e65afd7ab7c5938d8c10a28f565573eaef1ea051609aa7a516c93c545e6b93fc8ded642d12f3c9e9b116ac",
+            "PORT": "3001"
           }
         },
         "Role": {
@@ -186,14 +187,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionvfjAQQOuer4q9fQVolfYUWiSMYv1bm8sJgF7wFRU0E": {
+    "AppLambdaVersionyL1jKtsCVZrBqJhpwkZwIow8WFIUvGsTLrmkA9FQRpk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "5315VM7tSbAAOzXvWdZ+bBtRagITSqu6KN8VjEnyvWg="
+        "CodeSha256": "rZQ5YixTJhcsNg43Q8tUnjmLoxPHlebPkBga5VrZ7xk="
       }
     },
     "ApiGatewayRestApi": {
@@ -218,6 +219,99 @@
           ]
         },
         "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodProxyVarOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceProxyVar"
+        },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -318,7 +412,7 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1690587894583": {
+    "ApiGatewayDeployment1691146867213": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -327,6 +421,8 @@
         "StageName": "dev"
       },
       "DependsOn": [
+        "ApiGatewayMethodOptions",
+        "ApiGatewayMethodProxyVarOptions",
         "ApiGatewayMethodAny",
         "ApiGatewayMethodProxyVarAny"
       ]
@@ -381,7 +477,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionvfjAQQOuer4q9fQVolfYUWiSMYv1bm8sJgF7wFRU0E"
+        "Ref": "AppLambdaVersionyL1jKtsCVZrBqJhpwkZwIow8WFIUvGsTLrmkA9FQRpk"
       },
       "Export": {
         "Name": "sls-nodejs-aws-lambda-mongo-dev-AppLambdaFunctionQualifiedArn"

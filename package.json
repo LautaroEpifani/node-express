@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "ts-node src/server.ts",
-    "build": "rimraf dist && tsc && node_modules ",
+    "build": "rimraf dist && tsc ",
     "deploy": "npm run build:prod && serverless deploy --force && npm ci",
     "seed": "ts-node src/script/seedMongo.ts",
     "test": "jest"

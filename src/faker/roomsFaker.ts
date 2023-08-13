@@ -39,7 +39,6 @@ export const generateRooms = () => {
     const cancellation = faker.lorem.lines(8);
     const status = faker.helpers.arrayElement(["Available", "Booked"]);
     const bookings: Booking[] | [] = [];
-
     rooms.push({
       id,
       images,
@@ -60,3 +59,4 @@ export const generateRooms = () => {
 };
 
 export const roomsList = generateRooms();
+console.log(roomsList)

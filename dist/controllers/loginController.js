@@ -8,11 +8,17 @@ const express_1 = __importDefault(require("express"));
 const loginService_1 = require("../services/loginService");
 exports.loginRoutes = express_1.default.Router();
 const loginController = async (req, res) => {
-    console.log(req.body);
-    const { email, password } = req.body;
+    const body = req.body;
+    const jsonBody = JSON.parse(body);
+    const { email, password } = jsonBody;
+    res.set({
+        "Access-Control-Allow-Origin": '*',
+        "Access-Control-Allow-Methods": '*',
+        "'Access-Control-Allow-Headers'": '*',
+        "Content-Type": "application/json"
+    });
     try {
         const response = await (0, loginService_1.loginService)(email, password);
-        const str = JSON.stringify(response);
         res.status(200).send(response);
     }
     catch (error) {

@@ -7,14 +7,12 @@ exports.updateBooking = exports.deleteBooking = exports.postBooking = exports.ge
 const bookingValidator_1 = require("../validators/bookingValidator");
 const bookingService_1 = require("../mongoService/bookingService");
 const mongoose_1 = __importDefault(require("mongoose"));
-const server_1 = __importDefault(require("../server"));
 //GET all bookings from api 
 const getBookings = async (req, res) => {
-    (0, server_1.default)();
     try {
         const response = await (0, bookingService_1.getMongoBookingsService)();
         const str = JSON.stringify(response);
-        res.status(200).send(str);
+        res.status(200).send(response);
     }
     catch (error) {
         res.status(400).json({ error: error.message });

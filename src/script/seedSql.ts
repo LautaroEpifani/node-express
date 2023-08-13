@@ -76,7 +76,6 @@ export const postRoomsSQL = async () => {
       } = roomsList[i];
       await pool.query("INSERT INTO rooms VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", [
         null,
-    
         JSON.stringify(images),
         room_type,
         room_number,

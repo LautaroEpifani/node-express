@@ -3,15 +3,13 @@ import { Booking } from "../interfaces/interfaces";
 import { postBookingValidator, updateBookingValidator } from "../validators/bookingValidator";
 import { deleteMongoBookingService, getMongoBookingService, getMongoBookingsService, postMongoBookingService, updateMongoBookingService } from "../mongoService/bookingService";
 import mongoose from "mongoose";
-import connectDb from "../server";
 
 //GET all bookings from api 
 export const getBookings = async (req: express.Request, res: express.Response) => {
-  connectDb();
   try {
     const response = await getMongoBookingsService();
     const str = JSON.stringify(response);
-    res.status(200).send(str)
+    res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }

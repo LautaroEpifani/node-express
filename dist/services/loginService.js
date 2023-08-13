@@ -9,7 +9,6 @@ const utils_1 = require("../utils");
 const users_1 = require("../models/users");
 const loginService = async (email, password) => {
     const user = await users_1.userModel.find({ email: email, password: (0, utils_1.hashPassword)(password) });
-    console.log(user);
     if (user[0].email !== email || user[0].password !== (0, utils_1.hashPassword)(password)) {
         console.log("user doesn't exist");
     }
@@ -17,7 +16,7 @@ const loginService = async (email, password) => {
         const token = jsonwebtoken_1.default.sign({ ...user, id: null }, process.env.TOKEN_SECRET, {
             expiresIn: 1800,
         });
-        return { auth: true, token: token };
+        return { auth: true, token: token ? token : " " };
     }
 };
 exports.loginService = loginService;

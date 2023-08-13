@@ -63,3 +63,4 @@ const generateRooms = () => {
 };
 exports.generateRooms = generateRooms;
 exports.roomsList = (0, exports.generateRooms)();
+console.log(exports.roomsList);
