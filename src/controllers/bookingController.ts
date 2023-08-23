@@ -27,7 +27,7 @@ export const getBooking = async (req: express.Request, res: express.Response) =>
       res.status(400).json({ error: error.message });
     }
   } else {
-    res.status(404).json({error: 'No such booking'})
+    res.status(404).json({error: 'No such booking found'})
   }
  
 };
