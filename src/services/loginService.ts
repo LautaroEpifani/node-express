@@ -8,7 +8,7 @@ export const loginService = async (email: string, password: string) => {
     console.log("user doesn't exist");
   } else {
     const token = jwt.sign({ ...user, id: null }, process.env.TOKEN_SECRET as string, {
-      expiresIn: 1800,
+      expiresIn: 3600,
     });
     return { auth: true, token: token ? token : " " };
   }

@@ -1,7 +1,6 @@
-import { PORT, app } from "./app";
-import mongoose from "mongoose";
+// import { PORT, app } from "./app";
+// import mongoose from "mongoose";
 
-//connect to mongoDb
 // const connectDb = () => {
 //   mongoose
 //     .connect(process.env.MONGO_URI as string)
@@ -15,6 +14,5 @@ import mongoose from "mongoose";
 //     });
 // };
 
-// connectDb();
 
 // export default connectDb;

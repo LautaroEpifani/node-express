@@ -6,8 +6,9 @@ import { bookingsList } from "../faker/bookingsFaker";
 import { roomsList } from "../faker/roomsFaker";
 import { messagesList } from "../faker/messagesFaker";
 import { usersList } from "../faker/usersFaker";
+// import connectDb from "../server";
 
-
+// connectDb();
 
 async function postBookingsMongo() {
   await bookingModel.collection.drop();
@@ -15,8 +16,8 @@ async function postBookingsMongo() {
 };
 
 const postUsersMongo = async () => {
-  await userModel.collection.drop();
-  userModel.insertMany(usersList);
+  // await userModel.collection.drop();
+  await userModel.insertMany(usersList);
 };
 
 const postRoomsMongo = async () => {
@@ -29,8 +30,8 @@ const postMessagesMongo = async () => {
   messageModel.insertMany(messagesList);
 };
 
-postBookingsMongo();
+// postBookingsMongo();
 // postRoomsMongo();
 // postUsersMongo();
-// postMessagesMongo();
+postMessagesMongo();
 

@@ -59,4 +59,3 @@ export const generateRooms = () => {
 };
 
 export const roomsList = generateRooms();
-console.log(roomsList)
