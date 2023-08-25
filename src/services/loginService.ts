@@ -1,19 +1,15 @@
-import express from "express";
 import jwt from "jsonwebtoken";
+import { hashPassword } from "../utils";
+import { userModel } from "../models/users";
 
-export const loginService = async (req: express.Request, res: express.Response) => {
-  const user = {
-    email: "carlos@gmail.com",
-    password: "asdasd123",
-  };
-  const { email, password } = req.body;
-
-  if (user.email !== email || user.password !== password) {
-    return res.status(404).send("user doesn't exist");
+export const loginService = async (email: string, password: string) => {
+  const user =  await  userModel.find({email: email, password: hashPassword(password) });
+  if (user[0].email !== email || user[0].password !== hashPassword(password)) {
+    console.log("user doesn't exist");
   } else {
-    const token = jwt.sign({ ...user, id: "askdhakshdjahjkd" }, process.env.TOKEN_SECRET as string, {
-      expiresIn: 1800,
+    const token = jwt.sign({ ...user, id: null }, process.env.TOKEN_SECRET as string, {
+      expiresIn: 3600,
     });
-    res.json({ auth: true, token });
+    return { auth: true, token: token ? token : " " };
   }
 };

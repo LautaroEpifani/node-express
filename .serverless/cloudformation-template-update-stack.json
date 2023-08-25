@@ -74,7 +74,7 @@
     "AppLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/nodejs-aws-lambdados-dev-app"
+        "LogGroupName": "/aws/lambda/nodejs-aws-lambda-mongo-dev-app"
       }
     },
     "IamRoleLambdaExecution": {
@@ -102,7 +102,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "nodejs-aws-lambdados",
+                  "nodejs-aws-lambda-mongo",
                   "dev",
                   "lambda"
                 ]
@@ -120,7 +120,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambdados-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambda-mongo-dev*:*"
                     }
                   ]
                 },
@@ -131,7 +131,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambdados-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nodejs-aws-lambda-mongo-dev*:*:*"
                     }
                   ]
                 }
@@ -144,7 +144,7 @@
           "Fn::Join": [
             "-",
             [
-              "nodejs-aws-lambdados",
+              "nodejs-aws-lambda-mongo",
               "dev",
               {
                 "Ref": "AWS::Region"
@@ -162,16 +162,18 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/nodejs-aws-lambdados/dev/1688330559105-2023-07-02T20:42:39.105Z/nodejs-aws-lambdados.zip"
+          "S3Key": "serverless/nodejs-aws-lambda-mongo/dev/1691146906972-2023-08-04T11:01:46.972Z/nodejs-aws-lambda-mongo.zip"
         },
-        "Handler": "dist/app.handler",
+        "Handler": "dist/lambda.handler",
         "Runtime": "nodejs18.x",
-        "FunctionName": "nodejs-aws-lambdados-dev-app",
+        "FunctionName": "nodejs-aws-lambda-mongo-dev-app",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "TOKEN_SECRET": "49b3097265e88500d90d9e7a0c062b42d4fdaf1c84e65afd7ab7c5938d8c10a28f565573eaef1ea051609aa7a516c93c545e6b93fc8ded642d12f3c9e9b116ac"
+            "MONGO_URI": "mongodb+srv://Lautaro:lG08glKDs2UO7EP9@mernapp.z3ipbfe.mongodb.net/?retryWrites=true&w=majority",
+            "TOKEN_SECRET": "49b3097265e88500d90d9e7a0c062b42d4fdaf1c84e65afd7ab7c5938d8c10a28f565573eaef1ea051609aa7a516c93c545e6b93fc8ded642d12f3c9e9b116ac",
+            "PORT": "3001"
           }
         },
         "Role": {
@@ -185,20 +187,20 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionnAEP1I7aKSirVfsoVjDsp9nlATDXUpZ1sN9BgM8ACw0": {
+    "AppLambdaVersionyL1jKtsCVZrBqJhpwkZwIow8WFIUvGsTLrmkA9FQRpk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "KzQr9DMoDYZ1h0lEKIAaSzPqnMjLwrkjTMjhuna8YHs="
+        "CodeSha256": "rZQ5YixTJhcsNg43Q8tUnjmLoxPHlebPkBga5VrZ7xk="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-nodejs-aws-lambdados",
+        "Name": "dev-nodejs-aws-lambda-mongo",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -217,6 +219,99 @@
           ]
         },
         "PathPart": "{proxy+}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodProxyVarOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceProxyVar"
+        },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -317,7 +412,7 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1688330556051": {
+    "ApiGatewayDeployment1691146867213": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -326,6 +421,8 @@
         "StageName": "dev"
       },
       "DependsOn": [
+        "ApiGatewayMethodOptions",
+        "ApiGatewayMethodProxyVarOptions",
         "ApiGatewayMethodAny",
         "ApiGatewayMethodProxyVarAny"
       ]
@@ -374,16 +471,16 @@
         "Ref": "ServerlessDeploymentBucket"
       },
       "Export": {
-        "Name": "sls-nodejs-aws-lambdados-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-nodejs-aws-lambda-mongo-dev-ServerlessDeploymentBucketName"
       }
     },
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionnAEP1I7aKSirVfsoVjDsp9nlATDXUpZ1sN9BgM8ACw0"
+        "Ref": "AppLambdaVersionyL1jKtsCVZrBqJhpwkZwIow8WFIUvGsTLrmkA9FQRpk"
       },
       "Export": {
-        "Name": "sls-nodejs-aws-lambdados-dev-AppLambdaFunctionQualifiedArn"
+        "Name": "sls-nodejs-aws-lambda-mongo-dev-AppLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {
@@ -409,7 +506,7 @@
         ]
       },
       "Export": {
-        "Name": "sls-nodejs-aws-lambdados-dev-ServiceEndpoint"
+        "Name": "sls-nodejs-aws-lambda-mongo-dev-ServiceEndpoint"
       }
     }
   }

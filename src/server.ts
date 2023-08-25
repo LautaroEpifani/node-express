@@ -1,5 +1,18 @@
-import { PORT, app } from "./app";
+// import { PORT, app } from "./app";
+// import mongoose from "mongoose";
 
-app.listen(PORT, () => {
-    console.log(`Server running... on port ${PORT}`);
-})
+// const connectDb = () => {
+//   mongoose
+//     .connect(process.env.MONGO_URI as string)
+//     .then(() => {
+//       app.listen(PORT, () => {
+//         console.log(`Connect to db and listening... on port ${PORT}`);
+//       });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
+
+
+// export default connectDb;

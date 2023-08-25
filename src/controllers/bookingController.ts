@@ -1,12 +1,15 @@
 import express from "express";
-import { Booking } from "../models/models";
-import { deleteBookingService, getBookingService, getBookingsService, postBookingService, updateBookingService } from "../services/bookingService";
+import { Booking } from "../interfaces/interfaces";
+import { postBookingValidator, updateBookingValidator } from "../validators/bookingValidator";
+import { deleteMongoBookingService, getMongoBookingService, getMongoBookingsService, postMongoBookingService, updateMongoBookingService } from "../mongoService/bookingService";
+import mongoose from "mongoose";
 
 //GET all bookings from api 
 export const getBookings = async (req: express.Request, res: express.Response) => {
   try {
-    const response = await getBookingsService(req, res);
-    res.status(200).json(response);
+    const response = await getMongoBookingsService();
+    const str = JSON.stringify(response);
+    res.status(200).send(response)
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -14,19 +17,28 @@ export const getBookings = async (req: express.Request, res: express.Response) =
 
 //GET booking by id
 export const getBooking = async (req: express.Request, res: express.Response) => {
-  try {
-    const response = await getBookingService(req, res);
-    res.status(200).json(response);
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
+  const { id } = req.params;
+  if(mongoose.Types.ObjectId.isValid(id)) {
+    try {
+      const response = await getMongoBookingService(id);
+      const str = JSON.stringify(response);
+      res.status(200).send(str)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(404).json({error: 'No such booking'})
   }
+ 
 };
 
 //POST new Booking
 export const postBooking = async (req: express.Request<{},{},Booking> , res: express.Response) => {
+  const newBooking: Booking = { ...req.body };
   try {
-    const response = await postBookingService(req, res);
-    res.status(200).json(response);
+    postBookingValidator.validateAsync(newBooking);
+    const response = await postMongoBookingService(newBooking);
+    // res.status(200).send( response + ". Booking added with success")
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -34,21 +46,33 @@ export const postBooking = async (req: express.Request<{},{},Booking> , res: exp
 
 //DELETE booking
 export const deleteBooking = async (req: express.Request<{id: string}>, res: express.Response) => {
-  try {
-    const response = await deleteBookingService(req, res);
-    res.status(200).json(response);
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
+  const { id } = req.params;
+  if(mongoose.Types.ObjectId.isValid(id)) {
+    try {
+      const response = await deleteMongoBookingService(id);
+      res.status(200).json(response + ". Booking deleted with success")
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(404).json({error: 'No such booking'})
   }
 };
 
 //UPDATE booking
-export const updateBooking = async (req: express.Request, res: express.Response) => {
- 
-  try {
-    const response = await updateBookingService(req, res);
-    res.status(200).json(response);
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
+export const updateBooking = async (req: express.Request<{id: string},{},Partial<Booking>>, res: express.Response) => {
+  const { id } = req.params;
+  const update = req.body;
+  if(mongoose.Types.ObjectId.isValid(id)) {
+    try {
+      updateBookingValidator.validateAsync(update);
+      const response = await updateMongoBookingService(id, update);
+      res.status(200).json(response + ". Booking updated with success")
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(404).json({error: 'No such booking'})
   }
 };
+

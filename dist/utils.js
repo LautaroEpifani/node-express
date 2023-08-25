@@ -7,6 +7,6 @@ exports.hashPassword = void 0;
 const crypto_1 = __importDefault(require("crypto"));
 const salt = crypto_1.default.randomBytes(16).toString('hex');
 function hashPassword(password) {
-    return crypto_1.default.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
+    return crypto_1.default.pbkdf2Sync(password, "salt", 1000, 64, 'sha512').toString('hex');
 }
 exports.hashPassword = hashPassword;
